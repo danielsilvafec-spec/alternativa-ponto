@@ -1,2 +1,10 @@
-pip install psycopg2-binary uvicorn gunicorn
-pip freeze > requirements.txt
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+pydantic
+PyJWT
+passlib[bcrypt]
+bcrypt==4.0.1
+reportlab
+python-multipart
