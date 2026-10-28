@@ -32,6 +32,8 @@ jobs:
           pip install "flet[all]"
 
       - name: Compilar APK
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd mobile_app
           flet build apk --project "Alternativa Ponto" --yes
