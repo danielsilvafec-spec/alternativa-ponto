@@ -26,7 +26,7 @@ def main(page: ft.Page):
         page.update()
 
     page.on_route_change = route_change
-    page.go("/login")
+    page.navigate("/login")
 
 # Inicialização compatível com a nova versão do Flet para Android/iOS
 ft.run(main)
