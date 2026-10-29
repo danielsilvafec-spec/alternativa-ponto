@@ -9,7 +9,7 @@ def get_login_view(page: ft.Page):
         bgcolor="#ffffff", 
         color="#333333", 
         border_radius=10,
-        prefix_icon="person"  # <-- Corrigido para string
+        prefix_icon="person"
     )
     
     txt_password = ft.TextField(
@@ -19,10 +19,11 @@ def get_login_view(page: ft.Page):
         bgcolor="#ffffff", 
         color="#333333", 
         border_radius=10,
-        prefix_icon="lock"  # <-- Corrigido para string
+        prefix_icon="lock"
     )
     
-    lbl_error = ft.Text("", color=ft.colors.RED_200, size=14)
+    # Corrigido: ft.Colors (com 'C' maiúsculo)
+    lbl_error = ft.Text("", color=ft.Colors.RED_200, size=14)
 
     def on_login_click(e):
         btn_login.disabled = True
@@ -35,9 +36,9 @@ def get_login_view(page: ft.Page):
         if sucesso:
             lbl_error.value = ""
             if ApiClient.user_data["perfil"] == "admin":
-                page.navigate("/admin")  # <-- Corrigido para page.navigate()
+                page.navigate("/admin")
             else:
-                page.navigate("/employee")  # <-- Corrigido para page.navigate()
+                page.navigate("/employee")
         else:
             lbl_error.value = msg
         page.update()
