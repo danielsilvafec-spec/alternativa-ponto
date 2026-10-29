@@ -34,6 +34,7 @@ jobs:
       - name: Compilar APK
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANDROID_NDK_VERSION: 27.0.12077973
         run: |
           cd mobile_app
           flet build apk --project "Alternativa Ponto" --yes

@@ -1,4 +1,3 @@
-# mobile_app/views/login_view.py
 import flet as ft
 from components.theme import GRADIENTE_FUNDO, GRADIENTE_BOTAO_ACAO, SOMBRA_MODERNA, COR_TEXTO_CLARO
 from api_client import ApiClient
@@ -10,7 +9,7 @@ def get_login_view(page: ft.Page):
         bgcolor="#ffffff", 
         color="#333333", 
         border_radius=10,
-        prefix_icon=ft.icons.PERSON
+        prefix_icon="person"  # <-- Corrigido para string
     )
     
     txt_password = ft.TextField(
@@ -20,7 +19,7 @@ def get_login_view(page: ft.Page):
         bgcolor="#ffffff", 
         color="#333333", 
         border_radius=10,
-        prefix_icon=ft.icons.LOCK
+        prefix_icon="lock"  # <-- Corrigido para string
     )
     
     lbl_error = ft.Text("", color=ft.colors.RED_200, size=14)
@@ -36,9 +35,9 @@ def get_login_view(page: ft.Page):
         if sucesso:
             lbl_error.value = ""
             if ApiClient.user_data["perfil"] == "admin":
-                page.go("/admin")
+                page.navigate("/admin")  # <-- Corrigido para page.navigate()
             else:
-                page.go("/employee")
+                page.navigate("/employee")  # <-- Corrigido para page.navigate()
         else:
             lbl_error.value = msg
         page.update()
