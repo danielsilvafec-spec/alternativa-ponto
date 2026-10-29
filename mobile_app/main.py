@@ -3,7 +3,6 @@ import traceback
 
 def main(page: ft.Page):
     try:
-        # Tentamos importar a sua view verdadeira AQUI DENTRO
         from views.login_view import get_login_view
         
         page.title = "Alternativa Ponto"
@@ -15,12 +14,19 @@ def main(page: ft.Page):
         page.update()
         
     except Exception as e:
-        # Se o login_view ou o api_client tiverem algum erro, vai aparecer no ecrã!
         page.views.clear()
         erro = traceback.format_exc()
-        page.add(
-            ft.Text("ERRO FATAL ENCONTRADO:", color=ft.Colors.RED_ACCENT, weight="bold", size=20),
-            ft.Text(erro, selectable=True, size=11)
+        
+        # Agora sim: Injetamos uma View verdadeira para que o Flet consiga desenhar o erro
+        error_view = ft.View(
+            "/error",
+            [
+                ft.Text("ERRO FATAL ENCONTRADO:", color=ft.Colors.RED_ACCENT, weight="bold", size=20),
+                ft.Text(erro, selectable=True, size=11)
+            ],
+            scroll=ft.ScrollMode.AUTO
         )
+        page.views.append(error_view)
+        page.update()
 
 ft.run(main)
