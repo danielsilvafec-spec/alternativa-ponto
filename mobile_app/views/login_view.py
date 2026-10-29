@@ -22,7 +22,6 @@ def get_login_view(page: ft.Page):
         prefix_icon="lock"
     )
     
-    # Corrigido: ft.Colors (com 'C' maiúsculo)
     lbl_error = ft.Text("", color=ft.Colors.RED_200, size=14)
 
     def on_login_click(e):
@@ -45,7 +44,7 @@ def get_login_view(page: ft.Page):
 
     btn_login = ft.Container(
         content=ft.Text("ENTRAR", color=COR_TEXTO_CLARO, weight="bold", size=16),
-        alignment=ft.alignment.center,
+        alignment=ft.Alignment(0, 0),  # <-- Corrigido para Flet 1.0
         height=50,
         border_radius=25,
         gradient=GRADIENTE_BOTAO_ACAO,
@@ -69,7 +68,7 @@ def get_login_view(page: ft.Page):
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         ),
         padding=40,
-        alignment=ft.alignment.center,
+        alignment=ft.Alignment(0, 0),  # <-- Corrigido para Flet 1.0
         expand=True
     )
 
