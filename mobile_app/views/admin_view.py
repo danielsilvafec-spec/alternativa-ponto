@@ -41,7 +41,7 @@ def get_admin_view(page: ft.Page):
                         content=ft.Column([
                             ft.Text(f"{reg['funcionario']} - {tipo_texto}", weight="bold", color=COR_VERMELHO_ESCURO, size=16),
                             ft.Text(f"Data/Hora: {data_formatada}", color="#555555"),
-                            ft.Text(f"📍 {lat_lng}", color=ft.colors.BLUE_700, size=12)
+                            ft.Text(f"📍 {lat_lng}", color=ft.Colors.BLUE_700, size=12)
                         ]),
                         bgcolor=COR_TEXTO_CLARO, padding=15, border_radius=10, shadow=SOMBRA_MODERNA
                     )
@@ -108,7 +108,7 @@ def get_admin_view(page: ft.Page):
         saldo_info = next((s for s in saldos if s['nome'] == nome), None)
         if saldo_info:
             lbl_saldo_banco.value = saldo_info['saldo']
-            lbl_saldo_banco.color = ft.colors.GREEN_400 if saldo_info['positivo'] else ft.colors.RED_400
+            lbl_saldo_banco.color = ft.Colors.GREEN_400 if saldo_info['positivo'] else ft.Colors.RED_400
         else:
             lbl_saldo_banco.value = "0h 00m"
             lbl_saldo_banco.color = COR_TEXTO_CLARO
@@ -130,7 +130,7 @@ def get_admin_view(page: ft.Page):
     txt_entrada = ft.TextField(label="Entrada Padrão", value="08:00", width=155)
     txt_saida = ft.TextField(label="Saída Padrão", value="18:00", width=155)
     
-    lbl_feedback = ft.Text("", color=ft.colors.RED_400, size=14)
+    lbl_feedback = ft.Text("", color=ft.Colors.RED_400, size=14)
 
     def salvar_novo_usuario(e):
         if not all([txt_nome.value, txt_user.value, txt_senha.value, txt_dep.value, txt_horas.value, txt_entrada.value, txt_saida.value, txt_intervalo.value]):
@@ -158,7 +158,7 @@ def get_admin_view(page: ft.Page):
             txt_saida.value = "18:00"
             txt_intervalo.value = "60"
             dialog_novo_user.open = False
-            page.snack_bar = ft.SnackBar(ft.Text(msg, color=COR_TEXTO_CLARO), bgcolor=ft.colors.GREEN_600)
+            page.snack_bar = ft.SnackBar(ft.Text(msg, color=COR_TEXTO_CLARO), bgcolor=ft.Colors.GREEN_600)
             page.snack_bar.open = True
             page.dialog = dialog_funcionarios
             dialog_funcionarios.open = True
@@ -206,7 +206,7 @@ def get_admin_view(page: ft.Page):
     def salvar_nova_senha(e):
         if not txt_nova_senha.value: return
         sucesso, msg = ApiClient.alterar_senha_usuario(usuario_selecionado_senha, txt_nova_senha.value)
-        page.snack_bar = ft.SnackBar(ft.Text(msg, color=COR_TEXTO_CLARO), bgcolor=ft.colors.GREEN_600 if sucesso else ft.colors.RED_600)
+        page.snack_bar = ft.SnackBar(ft.Text(msg, color=COR_TEXTO_CLARO), bgcolor=ft.Colors.GREEN_600 if sucesso else ft.Colors.RED_600)
         page.snack_bar.open = True
         dialog_alterar_senha.open = False
         txt_nova_senha.value = ""
@@ -231,7 +231,7 @@ def get_admin_view(page: ft.Page):
         if usuario_selecionado_pdf and txt_mes.value:
             sucesso, msg = ApiClient.baixar_relatorio_pdf(usuario_selecionado_pdf, txt_mes.value)
             dialog_relatorio.open = False
-            page.snack_bar = ft.SnackBar(ft.Text(msg, color=COR_TEXTO_CLARO), bgcolor=ft.colors.GREEN_600 if sucesso else ft.colors.RED_600)
+            page.snack_bar = ft.SnackBar(ft.Text(msg, color=COR_TEXTO_CLARO), bgcolor=ft.Colors.GREEN_600 if sucesso else ft.Colors.RED_600)
             page.snack_bar.open = True
             page.dialog = dialog_funcionarios
             dialog_funcionarios.open = True
@@ -283,7 +283,7 @@ def get_admin_view(page: ft.Page):
             def excluir_func(uid):
                 def on_click(e):
                     sucesso, msg = ApiClient.excluir_usuario(uid)
-                    page.snack_bar = ft.SnackBar(ft.Text(msg, color=COR_TEXTO_CLARO), bgcolor=ft.colors.GREEN_600 if sucesso else ft.colors.RED_600)
+                    page.snack_bar = ft.SnackBar(ft.Text(msg, color=COR_TEXTO_CLARO), bgcolor=ft.Colors.GREEN_600 if sucesso else ft.Colors.RED_600)
                     page.snack_bar.open = True
                     carregar_dados_funcionarios()
                     carregar_dados()
@@ -297,10 +297,10 @@ def get_admin_view(page: ft.Page):
                             ft.Text(u['nome'], weight="bold", color="#333333"),
                             ft.Text(f"Usuário: {u['username']} | Perfil: {u['perfil']}", color="#555555", size=12)
                         ], expand=True),
-                        ft.IconButton(icon=ft.icons.ACCOUNT_BALANCE, icon_color=COR_VERMELHO_ESCURO, tooltip="Banco de Horas", on_click=abrir_banco(u['id'], u['nome'])),
-                        ft.IconButton(icon=ft.icons.PICTURE_AS_PDF, icon_color=COR_LARANJA, tooltip="Exportar PDF", on_click=abrir_pdf(u['id'], u['nome'])),
-                        ft.IconButton(icon=ft.icons.LOCK_RESET, icon_color=ft.colors.BLUE_700, tooltip="Redefinir Senha", on_click=abrir_senha(u['id'])),
-                        ft.IconButton(icon=ft.icons.DELETE_FOREVER, icon_color=ft.colors.RED_600, tooltip="Excluir", on_click=excluir_func(u['id']))
+                        ft.IconButton(icon="accont_balance", icon_color=COR_VERMELHO_ESCURO, tooltip="Banco de Horas", on_click=abrir_banco(u['id'], u['nome'])),
+                        ft.IconButton(icon="picture_as_pdf", icon_color=COR_LARANJA, tooltip="Exportar PDF", on_click=abrir_pdf(u['id'], u['nome'])),
+                        ft.IconButton(icon="lock_reset", icon_color=ft.Colors.BLUE_700, tooltip="Redefinir Senha", on_click=abrir_senha(u['id'])),
+                        ft.IconButton(icon="delete_forever", icon_color=ft.Colors.RED_600, tooltip="Excluir", on_click=excluir_func(u['id']))
                     ]), bgcolor="#f5f5f5", padding=10, border_radius=8
                 )
             )
@@ -310,7 +310,7 @@ def get_admin_view(page: ft.Page):
         modal=True, 
         title=ft.Row([
             ft.Text("Gestão de Funcionários", color=COR_TEXTO_CLARO, weight="bold"),
-            ft.IconButton(icon=ft.icons.PERSON_ADD, icon_color=COR_LARANJA, tooltip="Cadastrar Novo", on_click=abrir_modal_novo_user)
+            ft.IconButton(icon="person_add", icon_color=COR_LARANJA, tooltip="Cadastrar Novo", on_click=abrir_modal_novo_user)
         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
         content=ft.Container(content=lista_funcionarios, width=650),
         actions=[ft.TextButton("Fechar", on_click=lambda e: setattr(dialog_funcionarios, 'open', False) or page.update())]
@@ -345,7 +345,7 @@ def get_admin_view(page: ft.Page):
                 def on_click(e):
                     ApiClient.resolver_ajuste(ajuste_id, e.control.data)
                     dialog_ajustes_admin.open = False
-                    page.snack_bar = ft.SnackBar(ft.Text("Solicitação processada com sucesso!", color=COR_TEXTO_CLARO), bgcolor=ft.colors.GREEN_600)
+                    page.snack_bar = ft.SnackBar(ft.Text("Solicitação processada com sucesso!", color=COR_TEXTO_CLARO), bgcolor=ft.Colors.GREEN_600)
                     page.snack_bar.open = True
                     carregar_dados()
                     page.update()
@@ -358,8 +358,8 @@ def get_admin_view(page: ft.Page):
                         ft.Text(f"Quer registrar: {a['tipo']} às {a['hora']}", color="#555555"),
                         ft.Text(f"Motivo: {a['motivo']}", color="#555555", italic=True),
                         ft.Row([
-                            ft.ElevatedButton("Aprovar", data="aprovar", bgcolor=ft.colors.GREEN_600, color=COR_TEXTO_CLARO, on_click=criar_evento_resolver(a['id'])),
-                            ft.ElevatedButton("Rejeitar", data="rejeitar", bgcolor=ft.colors.RED_600, color=COR_TEXTO_CLARO, on_click=criar_evento_resolver(a['id']))
+                            ft.ElevatedButton("Aprovar", data="aprovar", bgcolor=ft.Colors.GREEN_600, color=COR_TEXTO_CLARO, on_click=criar_evento_resolver(a['id'])),
+                            ft.ElevatedButton("Rejeitar", data="rejeitar", bgcolor=ft.Colors.RED_600, color=COR_TEXTO_CLARO, on_click=criar_evento_resolver(a['id']))
                         ])
                     ]), bgcolor="#f5f5f5", padding=10, border_radius=8
                 )
@@ -383,13 +383,13 @@ def get_admin_view(page: ft.Page):
             ft.Container(
                 content=ft.Column([
                     ft.Row([
-                        ft.Image(src="logo.png", width=200, height=60, fit=ft.ImageFit.CONTAIN),
+                        ft.Image(src="logo.png", width=200, height=60, fit="contain"),
                         
                         ft.Row([
-                            ft.ElevatedButton("Funcionários", icon=ft.icons.PEOPLE, bgcolor="#3d0000", color=COR_TEXTO_CLARO, on_click=abrir_modal_funcionarios),
-                            ft.ElevatedButton("Aprovações", icon=ft.icons.FACT_CHECK, bgcolor="#3d0000", color=COR_TEXTO_CLARO, on_click=abrir_modal_ajustes),
-                            ft.ElevatedButton("Meu Ponto", icon=ft.icons.FINGERPRINT, bgcolor="#333", color=COR_TEXTO_CLARO, on_click=lambda e: page.go("/employee")),
-                            ft.IconButton(ft.icons.LOGOUT, icon_color=COR_TEXTO_CLARO, on_click=lambda e: page.go("/login"))
+                            ft.ElevatedButton("Funcionários", icon="people", bgcolor="#3d0000", color=COR_TEXTO_CLARO, on_click=abrir_modal_funcionarios),
+                            ft.ElevatedButton("Aprovações", icon="fact_check", bgcolor="#3d0000", color=COR_TEXTO_CLARO, on_click=abrir_modal_ajustes),
+                            ft.ElevatedButton("Meu Ponto", icon="fingerprint", bgcolor="#333", color=COR_TEXTO_CLARO, on_click=lambda e: page.navigate("/employee")),
+                            ft.IconButton("logout", icon_color=COR_TEXTO_CLARO, on_click=lambda e: page.navigate("/login"))
                         ])
                     ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     
@@ -401,8 +401,8 @@ def get_admin_view(page: ft.Page):
                         ft.Text("Registros de Ponto", size=18, weight="bold", color=COR_TEXTO_CLARO),
                         ft.Row([
                             lbl_data_filtro,
-                            ft.IconButton(icon=ft.icons.CALENDAR_MONTH, icon_color=COR_LARANJA, tooltip="Escolher Dia", on_click=lambda _: date_picker.pick_date()),
-                            ft.IconButton(icon=ft.icons.CLEAR, icon_color=ft.colors.RED_400, tooltip="Limpar Filtro", on_click=limpar_filtro)
+                            ft.IconButton(icon="calendar_month", icon_color=COR_LARANJA, tooltip="Escolher Dia", on_click=lambda _: date_picker.pick_date()),
+                            ft.IconButton(icon="clear", icon_color=ft.Colors.RED_400, tooltip="Limpar Filtro", on_click=limpar_filtro)
                         ])
                     ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     ft.Divider(color="#a99590"),

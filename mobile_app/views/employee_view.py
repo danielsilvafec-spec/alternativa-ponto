@@ -16,7 +16,7 @@ def get_employee_view(page: ft.Page):
     # Componentes Visuais
     lbl_relogio = ft.Text("00:00:00", size=48, weight="bold", color=COR_TEXTO_CLARO)
     lbl_data = ft.Text("", size=16, color="#a99590")
-    lbl_localizacao = ft.Text("Buscando GPS...", size=12, color=ft.colors.GREEN_300)
+    lbl_localizacao = ft.Text("Buscando GPS...", size=12, color=ft.Colors.GREEN_300)
     lbl_status = ft.Text("", size=16, weight="bold")
     
     lista_historico = ft.ListView(expand=True, spacing=10, padding=10)
@@ -75,7 +75,7 @@ def get_employee_view(page: ft.Page):
         tipo = e.control.data
         sucesso, msg = ApiClient.bater_ponto(tipo, current_lat, current_lng)
         lbl_status.value = msg
-        lbl_status.color = ft.colors.GREEN_300 if sucesso else ft.colors.RED_300
+        lbl_status.color = ft.Colors.GREEN_300 if sucesso else ft.Colors.RED_300
         page.update()
         if sucesso:
             carregar_historico()
@@ -94,13 +94,13 @@ def get_employee_view(page: ft.Page):
     def registrar_ponto_dropdown(e):
         if not drop_tipo_ponto.value:
             lbl_status.value = "Selecione uma opção primeiro!"
-            lbl_status.color = ft.colors.RED_300
+            lbl_status.color = ft.Colors.RED_300
             page.update()
             return
             
         sucesso, msg = ApiClient.bater_ponto(drop_tipo_ponto.value, current_lat, current_lng)
         lbl_status.value = msg
-        lbl_status.color = ft.colors.GREEN_300 if sucesso else ft.colors.RED_300
+        lbl_status.color = ft.Colors.GREEN_300 if sucesso else ft.Colors.RED_300
         page.update()
         if sucesso:
             carregar_historico()
@@ -126,7 +126,7 @@ def get_employee_view(page: ft.Page):
         if ApiClient.solicitar_ajuste(dados):
             dialog_ajuste.open = False
             txt_hora_ajuste.value = txt_motivo.value = ""
-            page.snack_bar = ft.SnackBar(ft.Text("Ajuste solicitado com sucesso!", color=COR_TEXTO_CLARO), bgcolor=ft.colors.GREEN_600)
+            page.snack_bar = ft.SnackBar(ft.Text("Ajuste solicitado com sucesso!", color=COR_TEXTO_CLARO), bgcolor=ft.Colors.GREEN_600)
             page.snack_bar.open = True
             page.update()
 
@@ -151,10 +151,10 @@ def get_employee_view(page: ft.Page):
                 content=ft.Column([
                     
                     ft.Row([
-                        ft.Image(src="logo.png", width=120, height=40, fit=ft.ImageFit.CONTAIN),
+                        ft.Image(src="logo.png", width=120, height=40, fit="contain"),
                         ft.Row([
-                            ft.ElevatedButton("Painel Admin", on_click=lambda e: page.go("/admin"), visible=(ApiClient.user_data.get("perfil") == "admin")),
-                            ft.IconButton(ft.icons.LOGOUT, icon_color=COR_LARANJA, on_click=lambda e: page.go("/login"))
+                            ft.ElevatedButton("Painel Admin", on_click=lambda e: page.navigate("/admin"), visible=(ApiClient.user_data.get("perfil") == "admin")),
+                            ft.IconButton("logout", icon_color=COR_LARANJA, on_click=lambda e: page.navigate("/login"))
                         ])
                     ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     
@@ -172,7 +172,7 @@ def get_employee_view(page: ft.Page):
                     ft.Divider(color="#a99590"),
                     lista_historico,
                     
-                    ft.ElevatedButton("Solicitar Ajuste Manual", icon=ft.icons.EDIT_CALENDAR, bgcolor="#333333", color=COR_TEXTO_CLARO, on_click=abrir_ajuste)
+                    ft.ElevatedButton("Solicitar Ajuste Manual", icon="edit_calendar", bgcolor="#333333", color=COR_TEXTO_CLARO, on_click=abrir_ajuste)
                 ]),
                 gradient=GRADIENTE_FUNDO,
                 expand=True,
