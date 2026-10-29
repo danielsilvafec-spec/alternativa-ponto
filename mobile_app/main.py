@@ -3,16 +3,24 @@ import traceback
 
 def main(page: ft.Page):
     try:
-        page.title = "Teste de Isolamento"
-        page.vertical_alignment = ft.MainAxisAlignment.CENTER
-        page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+        # Tentamos importar a sua view verdadeira AQUI DENTRO
+        from views.login_view import get_login_view
         
-        page.add(
-            ft.Text("O motor do Flet está a funcionar!", size=20, color=ft.Colors.GREEN_400),
-            ft.Text("Se consegue ler isto, o problema está nos ficheiros importados (login_view ou api_client).", text_align=ft.TextAlign.CENTER)
-        )
+        page.title = "Alternativa Ponto"
+        page.padding = 0
+        page.theme_mode = ft.ThemeMode.DARK
+        
+        page.views.clear()
+        page.views.append(get_login_view(page))
+        page.update()
+        
     except Exception as e:
+        # Se o login_view ou o api_client tiverem algum erro, vai aparecer no ecrã!
+        page.views.clear()
         erro = traceback.format_exc()
-        page.add(ft.Text(erro, color=ft.Colors.RED, selectable=True))
+        page.add(
+            ft.Text("ERRO FATAL ENCONTRADO:", color=ft.Colors.RED_ACCENT, weight="bold", size=20),
+            ft.Text(erro, selectable=True, size=11)
+        )
 
 ft.run(main)
