@@ -32,4 +32,7 @@ def main(page: ft.Page):
 if __name__ == "__main__":
     ft.app(target=main)
 if __name__ == "__main__":
-    ft.app(target=main, assets_dir="assets")
+    try:
+        ft.app(target=main)
+    except AttributeError:
+        pass  # No Android/iOS o Flet inicia o main() nativamente, então ignoramos o erro
