@@ -34,10 +34,14 @@ def get_login_view(page: ft.Page):
         btn_login.disabled = False
         if sucesso:
             lbl_error.value = ""
+            # Navegação direta para evitar bugs de roteamento no Android
+            # Importações locais evitam erros de "referência circular"
             if ApiClient.user_data["perfil"] == "admin":
-                page.navigate("/admin")
+                from views.admin_view import get_admin_view
+                page.views.append(get_admin_view(page))
             else:
-                page.navigate("/employee")
+                from views.employee_view import get_employee_view
+                page.views.append(get_employee_view(page))
         else:
             lbl_error.value = msg
         page.update()
@@ -55,8 +59,8 @@ def get_login_view(page: ft.Page):
     form_container = ft.Container(
         content=ft.Column(
             [
-                # Corrigido: ft.ImageFit.CONTAIN substituído pela string "contain"
-                ft.Image(src="logo.png", width=250, height=100, fit="contain"),
+                # CORREÇÃO: Carrega "icon.png" em vez de "logo.png"
+                ft.Image(src="icon.png", width=250, height=100, fit="contain"),
                 ft.Container(height=30),
                 txt_username,
                 ft.Container(height=10),
