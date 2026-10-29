@@ -44,7 +44,7 @@ def get_login_view(page: ft.Page):
 
     btn_login = ft.Container(
         content=ft.Text("ENTRAR", color=COR_TEXTO_CLARO, weight="bold", size=16),
-        alignment=ft.Alignment(0, 0),  # <-- Corrigido para Flet 1.0
+        alignment=ft.Alignment(0, 0),
         height=50,
         border_radius=25,
         gradient=GRADIENTE_BOTAO_ACAO,
@@ -55,7 +55,8 @@ def get_login_view(page: ft.Page):
     form_container = ft.Container(
         content=ft.Column(
             [
-                ft.Image(src="logo.png", width=250, height=100, fit=ft.ImageFit.CONTAIN),
+                # Corrigido: ft.ImageFit.CONTAIN substituído pela string "contain"
+                ft.Image(src="logo.png", width=250, height=100, fit="contain"),
                 ft.Container(height=30),
                 txt_username,
                 ft.Container(height=10),
@@ -68,7 +69,7 @@ def get_login_view(page: ft.Page):
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         ),
         padding=40,
-        alignment=ft.Alignment(0, 0),  # <-- Corrigido para Flet 1.0
+        alignment=ft.Alignment(0, 0),
         expand=True
     )
 
